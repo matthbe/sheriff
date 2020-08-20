@@ -51,6 +51,11 @@ type Marshaller interface {
 // If the passed argument `data` is a struct, the return value will be of type `map[string]interface{}`.
 // In all other cases we can't derive the type in a meaningful way and is therefore an `interface{}`.
 func Marshal(options *Options, data interface{}) (interface{}, error) {
+	// Fix nil pointer issue
+	if data == nil {
+		return nil, nil
+	}
+
 	v := reflect.ValueOf(data)
 	t := v.Type()
 
